@@ -19,7 +19,6 @@ const LandingPage = () => {
         <div className="w-[500px] h-[500px] bg-amber-200/20 blur-[65px] absolute top-0 left-0" />
 
         <div className="container mx-auto px-4 pt-6 pb-[200px] relative z-10">
-
           {/* Header */}
           <header className="flex justify-between items-center mb-16">
             <div className="text-xl text-black font-bold">MindCraft</div>
@@ -53,8 +52,7 @@ const LandingPage = () => {
               <p className="text-[17px] text-gray-900 mr-0 md:mr-20 mb-6">
                 Get role-specific questions, expand answers when you need them,
                 dive deeper into concepts, and organize everything your way.
-                From preparation to mastery — your ultimate interview toolkit is
-                here.
+                From preparation to mastery — your ultimate interview toolkit is here.
               </p>
 
               <button
@@ -68,7 +66,7 @@ const LandingPage = () => {
         </div>
 
         {/* HERO IMAGE SECTION */}
-        <div className="w-full min-h-full relative z-10 mb-56">
+        <div className="w-full min-h-full relative z-10 mb-4">
           <section className="flex items-center justify-center -mt-36">
             <img
               src={HERO_IMG}
@@ -87,7 +85,6 @@ const LandingPage = () => {
               </h2>
 
               <div className="flex flex-col items-center gap-8">
-
                 {/* First 3 cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
                   {APP_FEATURES.slice(0, 3).map((feature) => (
@@ -98,7 +95,9 @@ const LandingPage = () => {
                       <h3 className="text-base font-semibold mb-3">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600">{feature.description}</p>
+                      <p className="text-gray-600">
+                        {feature.description}
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -113,41 +112,39 @@ const LandingPage = () => {
                       <h3 className="text-base font-semibold mb-3">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600">{feature.description}</p>
+                      <p className="text-gray-600">
+                        {feature.description}
+                      </p>
                     </div>
                   ))}
                 </div>
-
               </div>
             </section>
           </div>
         </div>
 
-        {/* FOOTER (INSIDE MAIN WRAPPER AS YOU REQUESTED) */}
+        {/* FOOTER */}
         <div className="text-sm bg-gray-50 text-secondary text-center p-5 mt-5">
           Made with ❤️... Happy Coding
         </div>
-
       </div>
       {/* MAIN WRAPPER END */}
 
-          {/* <Modal
-            isOpen={openAuthModal}
-            onClose={() => {
-              setOpenAuthModal(false);
-              setCurrentPage("login");
-            }}
-            hideHeader
-          >
-            <div>
-              {currentPage === "login" && (
-                <Login setCurrentPage={setCurrentPage} />
-              )}
-              {currentPage === "signup" && (
-                <SignUp setCurrentPage={setCurrentPage} />
-              )}
-            </div>
-          </Modal> */}
+      {/* 
+      <Modal
+        isOpen={openAuthModal}
+        onClose={() => {
+          setOpenAuthModal(false);
+          setCurrentPage("login");
+        }}
+        hideHeader
+      >
+        <div>
+          {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
+          {currentPage === "signup" && <SignUp setCurrentPage={setCurrentPage} />}
+        </div>
+      </Modal>
+      */}
     </>
   );
 };
