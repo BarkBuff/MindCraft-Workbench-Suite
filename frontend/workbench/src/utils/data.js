@@ -1,5 +1,3 @@
-
-
 export const APP_FEATURES = [
   {
     id: "01",

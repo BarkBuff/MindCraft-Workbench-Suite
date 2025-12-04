@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import HERO_IMG from "../assets/hero-img.png";
 import { APP_FEATURES } from "../utils/data";
-import { useNavigate } from 'react-router-dom';
-import { LuSparkles } from 'react-icons/lu';
+import { useNavigate } from "react-router-dom";
+import { LuSparkles } from "react-icons/lu";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ const LandingPage = () => {
     <>
       {/* MAIN WRAPPER START */}
       <div className="w-full min-h-full bg-[#FFFCEF]">
-
         <div className="w-[500px] h-[500px] bg-amber-200/20 blur-[65px] absolute top-0 left-0" />
 
         <div className="container mx-auto px-4 pt-6 pb-[200px] relative z-10">
@@ -52,7 +51,8 @@ const LandingPage = () => {
               <p className="text-[17px] text-gray-900 mr-0 md:mr-20 mb-6">
                 Get role-specific questions, expand answers when you need them,
                 dive deeper into concepts, and organize everything your way.
-                From preparation to mastery — your ultimate interview toolkit is here.
+                From preparation to mastery — your ultimate interview toolkit is
+                here.
               </p>
 
               <button
@@ -95,9 +95,7 @@ const LandingPage = () => {
                       <h3 className="text-base font-semibold mb-3">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600">
-                        {feature.description}
-                      </p>
+                      <p className="text-gray-600">{feature.description}</p>
                     </div>
                   ))}
                 </div>
@@ -112,9 +110,7 @@ const LandingPage = () => {
                       <h3 className="text-base font-semibold mb-3">
                         {feature.title}
                       </h3>
-                      <p className="text-gray-600">
-                        {feature.description}
-                      </p>
+                      <p className="text-gray-600">{feature.description}</p>
                     </div>
                   ))}
                 </div>
