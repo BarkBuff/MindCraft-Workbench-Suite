@@ -20,7 +20,6 @@ Thumbs.db
 *.local
 backend/.env
 
-
 # =========================
 # Node dependencies
 # =========================
