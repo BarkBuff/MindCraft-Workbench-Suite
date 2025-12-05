@@ -121,7 +121,7 @@ const LandingPage = () => {
 
         {/* FOOTER */}
         <div className="text-sm bg-gray-50 text-secondary text-center p-5 mt-5">
-          Made with ❤️... Happy Coding
+          "Tell me and I forget. Teach me and I remember. Involve me and I learn." — Benjamin Franklin
         </div>
       </div>
       {/* MAIN WRAPPER END */}
