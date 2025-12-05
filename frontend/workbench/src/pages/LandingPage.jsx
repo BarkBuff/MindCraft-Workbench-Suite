@@ -126,7 +126,6 @@ const LandingPage = () => {
       </div>
       {/* MAIN WRAPPER END */}
 
-      {/* 
       <Modal
         isOpen={openAuthModal}
         onClose={() => {
@@ -136,11 +135,14 @@ const LandingPage = () => {
         hideHeader
       >
         <div>
-          {currentPage === "login" && <Login setCurrentPage={setCurrentPage} />}
-          {currentPage === "signup" && <SignUp setCurrentPage={setCurrentPage} />}
+          {currentPage === "login" && (
+            <Login setCurrentPage={setCurrentPage} />
+          )}
+          {currentPage === "signup" && (
+            <SignUp setCurrentPage={setCurrentPage} />
+          )}
         </div>
       </Modal>
-      */}
     </>
   );
 };

@@ -4,17 +4,19 @@ const Modal = ({ children, isOpen, onClose, title, hideHeader }) => {
   return (
     <div className="">
       {/* Modal Content */}
-      <div
-        className={`relative flex flex-col bg-white shadow-lg rounded-lg overflow-
-      `}
-      >
+      <div className="relative flex flex-col bg-white shadow-lg rounded-lg overflow-">
         {/* Modal Header */}
         {!hideHeader && (
           <div className="">
             <h3 className="">{title}</h3>
           </div>
         )}
-        <button type="button" className="" onClick={onClose}>
+
+        <button
+          type="button"
+          className=""
+          onClick={onClose}
+        >
           <svg
             className=""
             aria-hidden="true"
@@ -27,15 +29,18 @@ const Modal = ({ children, isOpen, onClose, title, hideHeader }) => {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+              d="m1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
             />
           </svg>
         </button>
 
         {/* Modal Body (Scrollable) */}
-        <div className="">{children}</div>
+        <div className="">
+          {children}
+        </div>
       </div>
     </div>
   );
 };
+
 export default Modal;
