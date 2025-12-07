@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
+import { validateEmail } from "../../utils/helper";
 import toast from "react-hot-toast";
 
 const SignUp = ({ setCurrentPage }) => {
@@ -22,26 +23,34 @@ const SignUp = ({ setCurrentPage }) => {
     e.preventDefault();
     setError(null);
     
+    let profileImageUrl = "";
+
     // Validation
-    if (!fullName.trim()) {
-      setError("Full name is required");
-      return;
-    }
-    if (!email.trim()) {
-      setError("Email is required");
-      return;
-    }
-    if (!password.trim() || password.length < 6) {
-      setError("Password must be at least 6 characters");
+    if (!fullName) {
+      setError("Please enter full name.");
       return;
     }
 
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    if (!password) {
+      setError("Please enter the password");
+      return;
+    }
+
+    setError("");
     setIsLoading(true);
+
+    // SignUp API Call
     try {
       const formData = new FormData();
       formData.append("fullName", fullName);
       formData.append("email", email);
       formData.append("password", password);
+      
       if (profilePic) {
         formData.append("profilePicture", profilePic);
       }
@@ -57,10 +66,13 @@ const SignUp = ({ setCurrentPage }) => {
         localStorage.setItem("token", response.data.token);
         navigate("/home");
       }
-    } catch (err) {
-      const errorMsg = err.response?.data?.message || "Sign up failed. Please try again.";
-      setError(errorMsg);
-      toast.error(errorMsg);
+    } catch (error) {
+      if (error.response && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+      toast.error(error.response?.data?.message || "Sign up failed");
     } finally {
       setIsLoading(false);
     }
