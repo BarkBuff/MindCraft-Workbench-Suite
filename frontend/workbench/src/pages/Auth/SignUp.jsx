@@ -1,20 +1,69 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
+import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
+import axiosInstance from "../../utils/axiosInstance";
+import toast from "react-hot-toast";
 
 const SignUp = ({ setCurrentPage }) => {
   const [profilePic, setProfilePic] = useState(null);
+  const [profilePicPreview, setProfilePicPreview] = useState(null);
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
   // Handle SignUp Form Submit
   const handleSignUp = async (e) => {
     e.preventDefault();
+    setError(null);
+    
+    // Validation
+    if (!fullName.trim()) {
+      setError("Full name is required");
+      return;
+    }
+    if (!email.trim()) {
+      setError("Email is required");
+      return;
+    }
+    if (!password.trim() || password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("fullName", fullName);
+      formData.append("email", email);
+      formData.append("password", password);
+      if (profilePic) {
+        formData.append("profilePicture", profilePic);
+      }
+
+      const response = await axiosInstance.post("/api/auth/signup", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data.success) {
+        toast.success("Account created successfully!");
+        localStorage.setItem("token", response.data.token);
+        navigate("/home");
+      }
+    } catch (err) {
+      const errorMsg = err.response?.data?.message || "Sign up failed. Please try again.";
+      setError(errorMsg);
+      toast.error(errorMsg);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -54,9 +103,10 @@ const SignUp = ({ setCurrentPage }) => {
 
         <button
           type="submit"
-          className="w-full bg-primary text-white py-2 rounded-md mt-6 hover:bg-orange-400 transition"
+          disabled={isLoading}
+          className="w-full bg-primary text-white py-2 rounded-md mt-6 hover:bg-orange-400 transition disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Sign Up
+          {isLoading ? "Creating Account..." : "Sign Up"}
         </button>
 
         <p className="text-[13px] text-center text-slate-800 mt-3">
