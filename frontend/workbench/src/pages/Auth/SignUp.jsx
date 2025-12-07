@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
 import axiosInstance from "../../utils/axiosInstance";
 import { validateEmail } from "../../utils/helper";
+import { UserContext } from "../../context/userContext";
 import toast from "react-hot-toast";
 
 const SignUp = ({ setCurrentPage }) => {
@@ -15,6 +16,7 @@ const SignUp = ({ setCurrentPage }) => {
 
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { updateUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -61,10 +63,13 @@ const SignUp = ({ setCurrentPage }) => {
         },
       });
 
-      if (response.data.success) {
+      const { token } = response.data;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        updateUser(response.data);
+        navigate("/dashboard");
         toast.success("Account created successfully!");
-        localStorage.setItem("token", response.data.token);
-        navigate("/home");
       }
     } catch (error) {
       if (error.response && error.response.data.message) {
