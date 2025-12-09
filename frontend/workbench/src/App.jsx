@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast";
 import LandingPage from "./pages/LandingPage.jsx";
 import Dashboard from "./pages/Home/Dashboard.jsx";
 import MindCraft from "./pages/MindCraft/MindCraft.jsx";
+import DashboardLayout from "./components/layouts/DashboardLayout";
 import UserProvider from "./context/userContext";
 
 const App = () => {
@@ -16,7 +17,14 @@ const App = () => {
             {/* Default Route */}
             <Route path="/" element={<LandingPage />} />
 
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/dashboard"
+              element={
+                <DashboardLayout>
+                  <Dashboard />
+                </DashboardLayout>
+              }
+            />
             <Route path="/mindcraft/:sessionId" element={<MindCraft />} />
           </Routes>
         </Router>

@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "../../components/Inputs/Input";
 import ProfilePhotoSelector from "../../components/Inputs/ProfilePhotoSelector";
+import uploadImage from "../../utils/uploadImage";
 import axiosInstance from "../../utils/axiosInstance";
 import { validateEmail } from "../../utils/helper";
 import { UserContext } from "../../context/userContext";
@@ -48,19 +49,17 @@ const SignUp = ({ setCurrentPage }) => {
 
     // SignUp API Call
     try {
-      const formData = new FormData();
-      formData.append("fullName", fullName);
-      formData.append("email", email);
-      formData.append("password", password);
-      
+      // Upload image if present
       if (profilePic) {
-        formData.append("profilePicture", profilePic);
+        const imgUploadRes = await uploadImage(profilePic);
+        profileImageUrl = imgUploadRes.imageUrl || "";
       }
 
-      const response = await axiosInstance.post("/api/auth/signup", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axiosInstance.post("/api/auth/signup", {
+        name: fullName,
+        email,
+        password,
+        profileImageUrl,
       });
 
       const { token } = response.data;
