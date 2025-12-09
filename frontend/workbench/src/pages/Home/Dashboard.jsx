@@ -1,52 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LuPlus } from "react-icons/lu";
 import { CARD_BG } from "../../utils/data";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
+import SummaryCard from "../../Cards/SummaryCard";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
+  const [openCreateModal, setOpenCreateModal] = useState(false);
+  const [sessions, setSessions] = useState([]);
+
+  const [openDeleteAlert, setOpenDeleteAlert] = useState({
+    open: false,
+    data: null,
+  });
+
+  const fetchAllSessions = async () => {};
+
+  const deleteSession = async (sessionData) => {};
+
+  useEffect(() => {
+    fetchAllSessions();
+  }, []);
+
   return (
-    <div className="container mx-auto px-4 py-10">
-      <div className="mb-10">
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
-          Welcome to Interview Prep AI
-        </h2>
-        <p className="text-gray-600">
-          Create a new session or continue with your existing ones
-        </p>
-      </div>
-
-      {/* Create New Session Card */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-        <div
-          className="p-6 rounded-lg border-2 border-dashed border-orange-300 hover:border-orange-500 cursor-pointer transition-all duration-200 flex items-center justify-center min-h-[200px] hover:bg-orange-50"
-          onClick={() => toast.success("Create new session")}
+    <div className="container mx-auto px-4 pt-4 pb-4">
+      <div className="grid grid-cols-1 mdgrid-cols-3 gap-4 md:gap-7 pt-1 pb-6">
+        <button
+          className="h-12 mdh-12 flex items-center justify-center gap-3 bg-linear-to-br from-orange-50 to-orange-100 rounded-lg hover:bg-orange-200 transition-all duration-200 cursor-pointer"
+          onClick={() => setOpenCreateModal(true)}
         >
-          <div className="text-center">
-            <LuPlus className="text-4xl text-orange-500 mx-auto mb-2" />
-            <p className="text-gray-700 font-semibold">Create New Session</p>
-          </div>
-        </div>
-
-        {/* Sample Session Cards */}
-        {CARD_BG.slice(0, 2).map((card) => (
-          <div
-            key={card.id}
-            style={{ backgroundImage: card.bgColor }}
-            className="p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
-          >
-            <h3 className="text-lg font-bold text-gray-800 mb-2">
-              Interview Session {card.id}
-            </h3>
-            <p className="text-gray-600 text-sm mb-4">
-              Continue preparing for your interview
-            </p>
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-gray-500">5 questions</span>
-              <button className="text-orange-600 hover:text-orange-700 font-semibold text-sm">
-                Continue →
-              </button>
-            </div>
-          </div>
+          <LuPlus className="text-2xl text-white" />
+          Add New
+        </button>
+      </div>
+      <div className="grid grid-cols-1 mdgrid-cols-3 gap-4 md:gap-7 pt-1 pb-6">
+        {sessions?.map((data, index) => (
+          <SummaryCard
+            key={data?._id}
+            colors={CARD_BG[index % CARD_BG.length]}
+            role={data?.role || ""}
+            topicsToFocus={data?.topicsToFocus || ""}
+            experience={data?.experience || ""}
+            questions={data?.questions?.length || "-"}
+            description={data?.description || ""}
+            lastUpdated={
+              data?.updatedAt
+                ? moment(data?.updatedAt).format("DD-MMM-YYYY")
+                : ""
+            }
+            onSelect={() => navigate(`/interview-prep/${data?._id}`)}
+            onDelete={() => setOpenDeleteAlert({ open: true, data })}
+          />
         ))}
       </div>
     </div>
